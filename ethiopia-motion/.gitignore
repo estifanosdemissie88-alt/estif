@@ -1,0 +1,3 @@
+node_modules/
+# 300 intermediate PNGs (~33 MB) - regenerate with `npm run render`
+frames/

@@ -1,0 +1,39 @@
+/* The page is a render target, not a responsive site: the stage is locked to
+   exactly 1920x1080 so a 1920x1080 screenshot is a 1:1 pixel capture. */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
+  background: #f5f4f0;
+}
+
+#stage {
+  position: relative;
+  width: 1920px;
+  height: 1080px;
+}
+
+#scene {
+  display: block;
+  width: 1920px;
+  height: 1080px;
+}
+
+/* Flat infographic styling: uniform hairline borders that stay 1px no matter
+   how far the camera zooms in (vector-effect), and no anti-alias seams
+   between adjacent country fills. */
+.country {
+  fill: #e8e6e0;
+  stroke: #b9b6ad;
+  stroke-width: 1;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}

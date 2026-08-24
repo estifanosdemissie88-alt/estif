@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Africa — Ethiopia Highlight</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="stage">
+      <svg
+        id="scene"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 1920 1080"
+        width="1920"
+        height="1080"
+        shape-rendering="geometricPrecision"
+      >
+        <defs>
+          <!-- Soft lift shadow under the separated Ethiopia. stdDeviation and
+               dy are divided by the camera zoom at runtime so the shadow keeps
+               a constant ~20px apparent blur as the camera pushes in. -->
+          <filter
+            id="lift"
+            x="-40%"
+            y="-40%"
+            width="180%"
+            height="180%"
+            color-interpolation-filters="sRGB"
+          >
+            <feDropShadow
+              id="lift-shadow"
+              dx="0"
+              dy="12"
+              stdDeviation="10"
+              flood-color="#2A2722"
+              flood-opacity="0"
+            />
+          </filter>
+
+          <!-- Subtle halo used as the 0:02–0:04 focus cue. -->
+          <filter
+            id="cue-glow"
+            x="-40%"
+            y="-40%"
+            width="180%"
+            height="180%"
+            color-interpolation-filters="sRGB"
+          >
+            <feGaussianBlur id="cue-blur" stdDeviation="7" />
+          </filter>
+
+          <!-- Ethiopia's own outline, reused as a clip for the flag bands. -->
+          <clipPath id="eth-clip">
+            <path id="eth-clip-path" d="" />
+          </clipPath>
+
+          <!-- Feathered left-to-right wipe. Both stops slide together so the
+               reveal has a soft edge instead of a hard cut. -->
+          <linearGradient id="wipe-grad" gradientUnits="userSpaceOnUse">
+            <stop id="wipe-a" offset="0" stop-color="#fff" stop-opacity="1" />
+            <stop id="wipe-b" offset="0" stop-color="#fff" stop-opacity="0" />
+          </linearGradient>
+          <mask id="wipe-mask" maskUnits="userSpaceOnUse">
+            <rect id="wipe-rect" fill="url(#wipe-grad)" />
+          </mask>
+        </defs>
+
+        <rect id="bg" x="0" y="0" width="1920" height="1080" fill="#F5F4F0" />
+
+        <g id="camera">
+          <g id="map">
+            <!-- Every country except Ethiopia, plus a static Ethiopia-shaped
+                 "socket" so the continent silhouette stays whole when the real
+                 Ethiopia lifts away from it. -->
+            <g id="continent"></g>
+
+            <!-- The liftable Ethiopia. -->
+            <g id="eth-lift" filter="url(#lift)">
+              <g id="eth-scale">
+                <path id="eth-glow" fill="none" filter="url(#cue-glow)" />
+                <path id="eth-fill" />
+                <g id="eth-flag" clip-path="url(#eth-clip)" mask="url(#wipe-mask)">
+                  <rect id="band-green" fill="#078930" />
+                  <rect id="band-yellow" fill="#FCDD09" />
+                  <rect id="band-red" fill="#DA121A" />
+                </g>
+                <path id="eth-stroke" fill="none" />
+              </g>
+            </g>
+          </g>
+        </g>
+      </svg>
+    </div>
+
+    <script src="vendor/gsap.min.js"></script>
+    <script src="africa.js"></script>
+    <script src="animation.js"></script>
+  </body>
+</html>
