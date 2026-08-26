@@ -45,6 +45,37 @@ cyan-blue sky bounce. No people visible above the ankles.
 
 ---
 
+## RENDERING THE MP4
+
+`generate_nz_dairy_shot.py` submits the Master Prompt to Veo and writes the mp4. Stdlib
+only, no dependencies:
+
+```bash
+export GEMINI_API_KEY=...        # https://aistudio.google.com/apikey
+python3 generate_nz_dairy_shot.py
+```
+
+Output is an 8-second 1080p clip with native audio, `nz_dairy_tracking_shot.mp4`.
+
+```bash
+python3 generate_nz_dairy_shot.py --aspect 9:16 --out vertical.mp4   # social cut
+python3 generate_nz_dairy_shot.py --model veo-3.0-fast-generate-001  # cheaper draft
+python3 generate_nz_dairy_shot.py --seed 7                           # reproducible
+```
+
+Veo generates 16:9 or 9:16 only, so the 2.39:1 framing is a crop in post:
+
+```bash
+ffmpeg -i nz_dairy_tracking_shot.mp4 -vf 'crop=iw:iw/2.39' -c:a copy scope.mp4
+```
+
+Expect to burn a few generations. Render two or three cheap drafts with the fast model,
+pick the one where the feet plant properly and the dairy stays illegible, then re-run
+that seed at full quality. The **Troubleshooting** table at the bottom maps the common
+failures back to prompt edits.
+
+---
+
 ## STRUCTURED BREAKDOWN
 
 | Element | Direction |
